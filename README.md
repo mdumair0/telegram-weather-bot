@@ -24,6 +24,7 @@ Response:
 
 Status: 200 OK
 Body: JSON array containing user objects.
+
 2. PUT /users/:id
 Description: Update user data by ID.
 
@@ -37,6 +38,7 @@ Response:
 
 Status: 200 OK
 Body: JSON object with success message.
+
 3. DELETE /users/:id
 Description: Delete user by ID.
 
