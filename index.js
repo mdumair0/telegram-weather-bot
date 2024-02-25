@@ -92,6 +92,7 @@ bot.use(async (ctx, next) => {
     }
 
     if (!ctx.session.registered) {
+        await ctx.reply('Welcome to the weather bot created by Mohammad Umair');
         await ctx.reply('Hi there! What is your name?');
         ctx.session.registered = true;
         return;
