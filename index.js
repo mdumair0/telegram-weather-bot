@@ -66,6 +66,7 @@ bot.command('weather', async (ctx) => {
 bot.use(async (ctx, next) => {
     ctx.session = ctx.session || {};
     const chatId = ctx.chat.id
+    console.log(chatId)
     const user = await User.findOne({ chatId })
 
     if (user && user.blocked) {
