@@ -5,8 +5,6 @@ const axios = require('axios')
 const { Telegraf, session, Scenes: { Stage, WizardScene } } = require("telegraf")
 const bot = new Telegraf('6866468122:AAGHh6HsPnR6OFj7tTYlAj_xy7yiCQto1oQ');
 
-await axios.get('https://telegram-weather-bot-8frh.onrender.com/users')
-
 bot.use(session());
 bot.command('deleteUser', async (ctx) => {
     const user = await User.findOne({ chatId: ctx.chat.id });

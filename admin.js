@@ -7,6 +7,10 @@ const User = require('./models/user');
 const app = express();
 app.use(bodyParser.json());
 
+app.get('/', async (req, res) => {
+    console.log("getting users")
+});
+
 app.get('/users', async (req, res) => {
     console.log("getting users")
     try {
