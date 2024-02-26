@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cron = require('node-cron');
 const app = require('./admin')
 const User = require('./models/user');
 const axios = require('axios')
@@ -129,6 +130,27 @@ bot.use(async (ctx, next) => {
 
 
 bot.launch();
+
+cron.schedule('0 9 * * *', async () => {
+    try {
+        const users = await User.find({});
+        for (const user of users) {
+            if (user.blocked) {
+                continue;
+            }
+
+            try {
+                const response = await axios.get(`http://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API}=${user.city} ${user.country}&aqi=no`);
+                await bot.telegram.sendMessage(user.chatId, `Current Weather in ${user.city}, ${user.country}:\nTemperature: ${response.data.current.temp_c} C\nHumidity: ${response.data.current.humidity} %\nWind Speed: ${response.data.current.wind_kph} Km/H\nVisibility: ${response.data.current.vis_km} Km`);
+            } catch (error) {
+                console.error('Unable to fetch weather data for user:', user.chatId);
+            }
+        }
+    } catch (error) {
+        console.error('Error fetching users:', error);
+    }
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
 });
