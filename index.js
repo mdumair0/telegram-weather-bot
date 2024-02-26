@@ -3,8 +3,7 @@ const app = require('./admin')
 const User = require('./models/user');
 const axios = require('axios')
 const { Telegraf, session, Scenes: { Stage, WizardScene } } = require("telegraf")
-const bot = new Telegraf('6866468122:AAGHh6HsPnR6OFj7tTYlAj_xy7yiCQto1oQ');
-
+const bot = new Telegraf(process.env.TELEGRAM_BOT);
 
 bot.use(session());
 bot.command('deleteUser', async (ctx) => {
@@ -45,7 +44,7 @@ bot.command('weather', async (ctx) => {
             await user.save();
     
             try {
-                await axios.get(`http://api.weatherapi.com/v1/current.json?key=4e6135477ba34a86ac181847242502&q=${user.city} ${user.country}&aqi=no`)
+                await axios.get(`http://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API}=${user.city} ${user.country}&aqi=no`)
                     .then(ele => {
                         ctx.reply(`Current Weather in ${user.city}, ${user.country}:
                         \n Temperature: ${ele.data.current.temp_c} C
