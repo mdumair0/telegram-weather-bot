@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/', async (req, res) => {
-    console.log("getting users")
+    res.json("server is up")
 });
 
 app.get('/users', async (req, res) => {
